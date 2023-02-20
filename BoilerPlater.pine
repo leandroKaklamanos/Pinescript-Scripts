@@ -1,0 +1,27 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © leiandros1
+
+//@version=5
+strategy("Buy Signal Example")
+
+// Define your indicators using the ta library
+fast_ma = ta.sma(close, 20)
+slow_ma = ta.sma(close, 50)
+rsi = ta.rsi(close, 14)
+[macd, signal, hist] = ta.macd(close, 12, 26, 9)
+
+// Define the conditions for the buy signal
+buy_condition = fast_ma > slow_ma and rsi < 30 and macd > 0
+
+// Define the strategy entry
+if(buy_condition)
+    strategy.entry("Buy", strategy.long)
+
+// Optional: Plot the indicators for visual confirmation
+plot(fast_ma, color=color.blue, title="Fast MA")
+plot(slow_ma, color=color.red, title="Slow MA")
+plot(rsi, color=color.yellow, title="RSI")
+plot(macd, color=color.purple, title="MACD")
+plot(signal, color=color.green, title="MACD Signal")
+plot(hist, color=color.orange, title="MACD Histogram")
+
